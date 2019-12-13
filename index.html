@@ -107,7 +107,7 @@
     document.body.appendChild( renderer.domElement );
 
     var geometry = new THREE.BoxGeometry(300, 20, 500, 10, 10, 10);
-    var material = new THREE.MeshBasicMaterial( {color: 0x88DD88, wireframe: true, wireframe_linewidth: 10  } );
+    var material = new THREE.MeshBasicMaterial( {color: 0xAABBFF, wireframe: true, wireframe_linewidth: 10  } );
     var cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
     camera.position.z = 1000;
@@ -121,9 +121,10 @@
       axios.get('https://adampiziak.com').then(function (response) {
         x = response.data.accel_x;
         y = response.data.accel_y;
-        z = response.data.accel_z;
+        z = response.data.accel_z - 1;
 
-        roll = Math.atan2(y, z)
+        sign = z > 0 ? 1 : -1
+        roll = Math.atan2(y, sign*Math.sqrt(z*z+0.001*x*x))
         pitch = Math.atan2(-x, Math.sqrt(y*y+z*z));
         cube.rotation.x = roll;
         cube.rotation.z = -pitch;
