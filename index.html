@@ -35,7 +35,7 @@
     renderer.render(scene, camera);
 
     setInterval(function(){
-      axios.get('http://167.172.23.186/').then(function (response) {
+      axios.get('https://adampiziak.com').then(function (response) {
         x = response.data.accel_x;
         y = response.data.accel_y;
         z = response.data.accel_z;
