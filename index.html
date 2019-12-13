@@ -6,6 +6,13 @@
   </head>
   <body>
     <div class="metrics">
+      <div class="light"></div>
+      <div class="temperature"></div>
+      <div class="humidity"></div>
+      <div class="x"></div>
+      <div class="y"></div>
+      <div class="z"></div>
+
     </div>
   </body>
   <style media="screen">
@@ -16,7 +23,12 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js" integrity="sha256-gSh8eotzb/CVvCREGPUNgIWuDnTYnZvVOQnRrP1eDjI=" crossorigin="anonymous"></script>
   <script type="text/javascript">
-
+    var lightElement = document.getElementsByClassName("light")[0];
+    var humidityElement = document.getElementsByClassName("humidity")[0];
+    var temperatureElement = document.getElementsByClassName("temperature")[0];
+    var xElement = document.getElementsByClassName("x")[0];
+    var yElement = document.getElementsByClassName("y")[0];
+    var zElement = document.getElementsByClassName("z")[0];
 
     var scene = new THREE.Scene();
     scene.background = new THREE.Color( 0xffFFFF );
@@ -27,7 +39,7 @@
     document.body.appendChild( renderer.domElement );
 
     var geometry = new THREE.BoxGeometry(300, 20, 500, 10, 10, 10);
-    var material = new THREE.MeshBasicMaterial( {color: 0xCCCCCC, wireframe: true, wireframe_linewidth: 10  } );
+    var material = new THREE.MeshBasicMaterial( {color: 0x88DD88, wireframe: true, wireframe_linewidth: 10  } );
     var cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
     camera.position.z = 1000;
@@ -48,6 +60,17 @@
         cube.rotation.x = roll;
         cube.rotation.z = -pitch;
         renderer.render(scene, camera);
+
+        light = response.data.light
+        temp = response.data.temp
+        humidity = response.data.humidity
+
+        lightElement.innerHTML = "Ambient Light: " + light
+        temperatureElement.innerHTML = "temperature: " + temp
+        humidityElement.innerHTML = "Humidity: " + humidity
+        xElement.innerHTML = "X: " + x
+        yElement.innerHTML = "Y: " + y
+        zElement.innerHTML = "Z: " + z
       });
     }, 100);
   </script>
